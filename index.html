@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fbf5eb">
+  <meta name="description" content="A calm, friendly home screen for NEUARK Memory Care.">
+  <title>NEUARK Memory Care</title>
+  <link rel="icon" type="image/png" href="assets/image.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/pwa-180.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="NEUARK">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="styles.css">
+  <script src="i18n.js" defer></script>
+  <script src="app.js" defer></script>
+  <script src="pwa.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to activities</a>
+  <header class="topbar">
+    <a class="brand" href="#main" aria-label="NEUARK Memory Care home">
+      <img class="brand-logo" src="assets/image.png" alt="" width="46" height="46" decoding="async">
+      <span><strong>NEUARK</strong><small>Memory Care</small></span>
+    </a>
+    <div class="today" aria-label="Today's date"><span id="weekday"></span><span id="date"></span></div>
+    <div class="topbar-actions">
+      <label class="site-language-picker"><span class="sr-only">Website language</span><select id="siteLanguageSelect" aria-label="Website language"><option value="ta-IN">தமிழ்</option><option value="en-IN">English</option><option value="hi-IN">हिन्दी</option><option value="ml-IN">മലയാളം</option><option value="te-IN">తెలుగు</option><option value="kn-IN">ಕನ್ನಡ</option><option value="ko-KR">한국어</option></select></label>
+      <button class="voice-top-button" id="voiceAssistantLauncher" type="button" aria-label="Open voice controls" aria-haspopup="dialog"><span aria-hidden="true">🎙️</span><span class="voice-top-label">Voice</span></button><button class="help-button" id="helpButton" type="button" aria-label="Get help"><span aria-hidden="true">?</span><span class="help-label">Help</span></button>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <section class="welcome" aria-labelledby="welcomeTitle">
+      <div class="welcome-copy">
+        <p class="eyebrow">A gentle place to begin</p>
+        <h1 id="welcomeTitle">Hello, <span id="name">friend</span> <span aria-hidden="true">☀️</span></h1>
+        <p>What would you like to do today?</p>
+      </div>
+      <div class="welcome-art" aria-hidden="true">
+        <span class="art-sun">☀️</span><span class="art-flower flower-one">🌼</span><span class="art-flower flower-two">🌷</span>
+        <span class="art-bird">🐦</span>
+      </div>
+    </section>
+
+    <section class="activities" aria-label="Activities">
+      <button class="activity life" data-feature="life" type="button"><span class="picture" aria-hidden="true">📖</span><span class="activity-text"><strong>My Life Story</strong><small>Remember special moments</small></span><span class="arrow" aria-hidden="true">›</span></button>
+      <button class="activity helper" data-feature="helper" type="button"><span class="picture" aria-hidden="true">🤝</span><span class="activity-text"><strong>Today's Helper</strong><small>See what comes next</small></span><span class="arrow" aria-hidden="true">›</span></button>
+      <button class="activity garden" data-feature="garden" type="button"><span class="picture" aria-hidden="true">🌿</span><span class="activity-text"><strong>Calm Garden</strong><small>Take a peaceful pause</small></span><span class="arrow" aria-hidden="true">›</span></button>
+      <button class="activity family" data-feature="family" type="button"><span class="picture" aria-hidden="true">👨‍👩‍👧</span><span class="activity-text"><strong>Family Participation Game</strong><small>Play together</small></span><span class="arrow" aria-hidden="true">›</span></button>
+      <button class="activity games" data-feature="games" type="button"><span class="picture" aria-hidden="true">🧩</span><span class="activity-text"><strong>Cognitive Games</strong><small>Enjoy a little brain play</small></span><span class="arrow" aria-hidden="true">›</span></button>
+      <button class="activity routine" data-feature="routine" type="button"><span class="picture" aria-hidden="true">🕒</span><span class="activity-text"><strong>Daily Routine</strong><small>Look at today's plan</small></span><span class="arrow" aria-hidden="true">›</span></button>
+      <button class="activity smart" data-feature="smart" type="button"><span class="picture" aria-hidden="true">💬</span><span class="activity-text"><strong>Smart Assistant</strong><small>Ask for help with this website</small></span><span class="arrow" aria-hidden="true">›</span></button>
+      <button class="activity voice" data-feature="voice" type="button"><span class="picture" aria-hidden="true">🎙️</span><span class="activity-text"><strong>Voice Assistant</strong><small>Ask for help out loud</small></span><span class="arrow" aria-hidden="true">›</span></button>
+    </section>
+    <p class="footer-note"><span aria-hidden="true">💛</span> Take your time. Someone is here to help.</p>
+  </main>
+
+  <main id="smartAssistant" class="smart-assistant" tabindex="-1" hidden aria-labelledby="smartAssistantTitle">
+    <button id="smartAssistantHome" class="back-button" type="button"><span aria-hidden="true">←</span> Home</button>
+    <header class="story-header smart-assistant-header">
+      <p class="eyebrow">Friendly help for this website</p>
+      <h1 id="smartAssistantTitle">Smart Assistant</h1>
+      <p id="smartAssistantIntro">I can help you open activities and hear instructions. I answer questions about this website.</p>
+    </header>
+    <section class="smart-assistant-questions" aria-label="Helpful choices">
+      <button id="smartExplain" class="smart-choice" type="button"><span aria-hidden="true">💬</span><strong>What can you help me with?</strong></button>
+      <button id="smartRoutine" class="smart-choice" type="button"><span aria-hidden="true">🕒</span><strong>Show me today's plan</strong></button>
+      <button id="smartGarden" class="smart-choice" type="button"><span aria-hidden="true">🌿</span><strong>Help me feel calm</strong></button>
+      <button id="smartGoHome" class="smart-choice" type="button"><span aria-hidden="true">🏠</span><strong>Go Home</strong></button>
+    </section>
+    <p id="smartAssistantResponse" class="smart-assistant-response" role="status" aria-live="polite">Choose a picture, or use Voice Input and ask a simple question about the website.</p>
+    <section class="smart-assistant-voice" aria-label="Voice controls">
+      <button class="primary-button" type="button" data-voice-action="listen">🎙️ Voice Input</button>
+      <button class="secondary-button" type="button" data-voice-action="repeat">🔊 Repeat</button>
+      <button class="stop-button" type="button" data-voice-action="stop">■ Stop Voice</button>
+    </section>
+    <p id="smartVoiceStatus" class="smart-voice-status" role="status" aria-live="polite"></p>
+    <p class="smart-assistant-limit">For other questions, please ask a family member or caregiver.</p>
+  </main>
+
+  <main id="lifeStory" class="life-story" tabindex="-1" hidden aria-labelledby="lifeStoryTitle">
+    <button id="backHome" class="back-button" type="button"><span aria-hidden="true">←</span> Home</button>
+    <header class="story-header">
+      <p class="eyebrow">People who matter</p>
+      <h1 id="lifeStoryTitle">My Life Story</h1>
+      <p>Tap a photo to hear who it is.</p>
+    </header>
+
+    <section class="family-tools" aria-label="Add a family photo">
+      <form id="personForm" class="person-form">
+        <h2>Add a loved one</h2>
+        <div class="form-grid">
+          <label class="photo-field" for="personPhoto">
+            <span class="field-label">Choose a photo</span>
+            <input id="personPhoto" name="photo" type="file" accept="image/*" required aria-describedby="photoHelp">
+            <span id="photoHelp" class="field-help">A clear face photo works well. Photos stay on this device.</span>
+          </label>
+          <label for="personName">Name <span aria-hidden="true">*</span>
+            <input id="personName" name="name" type="text" autocomplete="name" maxlength="60" required>
+          </label>
+          <label for="personRelationship">Relationship <span aria-hidden="true">*</span>
+            <input id="personRelationship" name="relationship" type="text" placeholder="for example, daughter" maxlength="60" required>
+          </label>
+          <label class="memory-field" for="personMemory">A special memory <span class="optional">(optional)</span>
+            <textarea id="personMemory" name="memory" rows="2" maxlength="240" placeholder="A short note to remember"></textarea>
+          </label>
+        </div>
+        <button class="primary-button save-person" type="submit">Add photo</button>
+        <p id="formStatus" class="status-message" role="status" aria-live="polite"></p>
+      </form>
+    </section>
+
+    <section class="people-section" aria-labelledby="peopleTitle">
+      <div class="people-heading"><h2 id="peopleTitle">Family and friends</h2><span id="peopleCount" class="people-count"></span></div>
+      <div id="peopleGrid" class="people-grid"></div>
+      <p id="emptyStory" class="empty-story">Your family can add a photo here.</p>
+    </section>
+
+    <section class="voice-tools" aria-label="Voice controls">
+      <p class="voice-hint">Choose a photo to hear the name and relationship.</p>
+      <div class="voice-buttons">
+        <button id="repeatVoice" class="primary-button" type="button" disabled><span aria-hidden="true">🔊</span> Repeat Voice</button>
+        <button id="stopVoice" class="stop-button" type="button"><span aria-hidden="true">■</span> Stop Voice</button>
+      </div>
+      <p id="voiceStatus" class="sr-only" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <main id="familyGame" class="family-game" tabindex="-1" hidden aria-labelledby="gameTitle">
+    <button id="gameHome" class="back-button" type="button"><span aria-hidden="true">←</span> Home</button>
+    <header class="story-header game-header">
+      <p class="eyebrow">A little time together</p>
+      <h1 id="gameTitle">Family Picture Game</h1>
+      <p>Look at the photo. Who do you see?</p>
+    </header>
+
+    <section id="gameSetup" class="game-setup" hidden aria-labelledby="setupTitle">
+      <div class="setup-picture" aria-hidden="true">👨‍👩‍👧</div>
+      <h2 id="setupTitle">Let's add family photos</h2>
+      <p id="setupMessage">Add at least two family photos in My Life Story to play together.</p>
+      <button id="addGamePhotos" class="primary-button" type="button">Add family photos</button>
+    </section>
+
+    <section id="gamePlay" class="game-play" hidden aria-labelledby="gameQuestion">
+      <p id="gameProgress" class="game-progress"></p>
+      <h2 id="gameQuestion" tabindex="-1">Who is this?</h2>
+      <div class="target-photo-wrap"><img id="targetPhoto" class="target-photo" alt="A family member to identify"></div>
+      <p class="choose-prompt">Choose a picture below.</p>
+      <div id="gameAnswers" class="game-answers" role="group" aria-label="Choose the family member"></div>
+      <p id="gameFeedback" class="game-feedback" role="status" aria-live="polite">Take your time. There is no rush.</p>
+      <button id="nextQuestion" class="primary-button next-question" type="button" hidden>Next photo</button>
+      <section class="game-voice" aria-label="Voice controls">
+        <p class="voice-hint">You can listen to the question or ask for a hint.</p>
+        <div class="game-voice-buttons">
+          <button id="gameHint" class="hint-button" type="button"><span aria-hidden="true">💡</span> Gentle hint</button>
+          <button id="gameRepeatVoice" class="primary-button" type="button" disabled><span aria-hidden="true">🔊</span> Repeat Voice</button>
+          <button id="gameStopVoice" class="stop-button" type="button"><span aria-hidden="true">■</span> Stop Voice</button>
+        </div>
+        <p id="gameVoiceStatus" class="sr-only" role="status" aria-live="polite"></p>
+      </section>
+    </section>
+  </main>
+
+  <main id="helperActivity" class="helper-activity" tabindex="-1" hidden aria-labelledby="helperTitle">
+    <button id="helperHome" class="back-button" type="button"><span aria-hidden="true">←</span> Home</button>
+    <header class="story-header helper-header">
+      <p class="eyebrow">A friendly little activity</p>
+      <h1 id="helperTitle">Today's Helper</h1>
+      <p>Look at the picture. What is it?</p>
+    </header>
+
+    <section class="helper-play" aria-labelledby="helperQuestion">
+      <p id="helperProgress" class="helper-progress">One picture at a time</p>
+      <h2 id="helperQuestion" tabindex="-1">What do you see?</h2>
+      <div id="helperObjectPicture" class="helper-object-picture" role="img" aria-label="Everyday object to identify"></div>
+      <p class="helper-choose-prompt">Choose a picture below.</p>
+      <div id="helperAnswers" class="helper-answers" role="group" aria-label="Choose the object"></div>
+      <p id="helperFeedback" class="helper-feedback" role="status" aria-live="polite">Take your time. There is no rush.</p>
+      <button id="helperNext" class="primary-button helper-next" type="button" hidden>Next picture</button>
+      <section class="helper-voice" aria-label="Voice controls">
+        <p class="voice-hint">Listen again or ask for a hint.</p>
+        <div class="helper-voice-buttons">
+          <button id="helperHint" class="hint-button" type="button"><span aria-hidden="true">💡</span> Hint</button>
+          <button id="helperRepeatVoice" class="primary-button" type="button"><span aria-hidden="true">🔊</span> Repeat Voice</button>
+          <button id="helperStopVoice" class="stop-button" type="button"><span aria-hidden="true">■</span> Stop Voice</button>
+        </div>
+        <p id="helperVoiceStatus" class="sr-only" role="status" aria-live="polite"></p>
+      </section>
+    </section>
+  </main>
+
+  <main id="routineActivity" class="routine-activity" tabindex="-1" hidden aria-labelledby="routineTitle">
+    <button id="routineHome" class="back-button" type="button"><span aria-hidden="true">←</span> Home</button>
+    <header class="story-header routine-header">
+      <p class="eyebrow">One gentle step at a time</p>
+      <h1 id="routineTitle">Daily Routine</h1>
+      <p>Here is a familiar plan for today.</p>
+    </header>
+
+    <section class="routine-section" aria-labelledby="scheduleTitle">
+      <h2 id="scheduleTitle">Today's plan</h2>
+      <ol id="routineSchedule" class="routine-schedule"></ol>
+    </section>
+
+    <section class="reminders-section" aria-labelledby="remindersTitle">
+      <div class="reminders-heading">
+        <div><p class="eyebrow">A friendly nudge</p><h2 id="remindersTitle">Reminders</h2></div>
+        <button id="addReminder" class="primary-button add-reminder" type="button"><span aria-hidden="true">＋</span> Add Reminder</button>
+      </div>
+      <p class="reminder-note">Reminders appear here and speak while this page is open.</p>
+
+      <form id="reminderForm" class="reminder-form" hidden>
+        <h3 id="reminderFormTitle">Add a reminder</h3>
+        <fieldset class="reminder-choice-set">
+          <legend>Choose a picture for the reminder</legend>
+          <div id="reminderChoices" class="reminder-choices"></div>
+        </fieldset>
+        <label for="reminderTime">What time?</label>
+        <input id="reminderTime" type="time" required>
+        <div class="reminder-form-buttons">
+          <button id="saveReminder" class="primary-button" type="submit">Save reminder</button>
+          <button id="cancelReminder" class="secondary-button" type="button">Cancel</button>
+        </div>
+        <p id="reminderFormStatus" class="status-message" role="status" aria-live="polite"></p>
+      </form>
+
+      <p id="emptyReminders" class="empty-reminders">No reminders yet. Add one whenever you like.</p>
+      <div id="reminderList" class="reminder-list"></div>
+      <p id="reminderStatus" class="sr-only" role="status" aria-live="polite"></p>
+    </section>
+
+    <section class="routine-voice" aria-label="Voice controls">
+      <p class="voice-hint">Listen to the plan again.</p>
+      <div class="routine-voice-buttons">
+        <button id="routineRepeatVoice" class="primary-button" type="button"><span aria-hidden="true">🔊</span> Repeat Voice</button>
+        <button id="routineStopVoice" class="stop-button" type="button"><span aria-hidden="true">■</span> Stop Voice</button>
+      </div>
+      <p id="routineVoiceStatus" class="sr-only" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <main id="calmGarden" class="calm-garden" tabindex="-1" hidden aria-labelledby="gardenTitle">
+    <button id="gardenHome" class="back-button" type="button"><span aria-hidden="true">←</span> Home</button>
+    <header class="story-header garden-header">
+      <p class="eyebrow">A peaceful place</p>
+      <h1 id="gardenTitle">Calm Garden</h1>
+      <p>Take a quiet moment together.</p>
+    </header>
+
+    <section class="garden-scene" aria-label="A sunny garden with flowers, trees, birds, and a pond">
+      <svg class="garden-landscape" viewBox="0 0 1000 420" role="img" aria-labelledby="landscapeTitle landscapeDesc" xmlns="http://www.w3.org/2000/svg">
+        <title id="landscapeTitle">Sunny garden</title>
+        <desc id="landscapeDesc">Green hills, flowering plants, tall trees, birds in the sky, and a small blue pond.</desc>
+        <rect width="1000" height="420" rx="32" fill="#eaf3e6"/>
+        <circle cx="825" cy="92" r="48" fill="#f1c86b"/>
+        <path d="M0 226c147-73 253-56 381 12s251 52 365-10 178-61 254-20v212H0Z" fill="#c6dfbd"/>
+        <path d="M0 281c165-59 297-18 427 27s292 17 402-37 130-48 171-31v180H0Z" fill="#96bf8e"/>
+        <path d="M646 321c40-39 159-43 214-2 25 19 10 57-22 66-55 15-179 7-201-21-9-12-5-30 9-43Z" fill="#8fc9d2" stroke="#5e9fa9" stroke-width="7"/>
+        <path d="M686 347c29-13 71-13 99-1m-51 20c30-11 63-8 85 1" fill="none" stroke="#d8f1ef" stroke-width="7" stroke-linecap="round"/>
+        <path d="M112 298V143m-31 72c-17-27-41-25-53-6m115-9c19-31 46-27 59-6" fill="none" stroke="#805e42" stroke-width="21" stroke-linecap="round"/>
+        <circle cx="77" cy="129" r="54" fill="#6d9d70"/><circle cx="132" cy="112" r="64" fill="#7eae78"/><circle cx="177" cy="147" r="48" fill="#69966a"/>
+        <path d="M896 292V174m-19 64c-17-23-34-21-46-7m83-21c17-26 36-22 49-6" fill="none" stroke="#805e42" stroke-width="16" stroke-linecap="round"/>
+        <circle cx="870" cy="162" r="39" fill="#79a775"/><circle cx="915" cy="145" r="51" fill="#8cb980"/><circle cx="955" cy="175" r="38" fill="#6f9d70"/>
+        <path d="M285 103q18-20 36 0m18-24q15-16 30 0m27 28q18-20 36 0" fill="none" stroke="#748d7a" stroke-width="7" stroke-linecap="round"/>
+        <path d="M225 360v-40m0 15-17-15m17 20 18-20m-17 0-13-15m14 14 13-15m37 56v-31m0 13-13-11m13 16 14-16m-14-2-10-11m10 11 11-11" fill="none" stroke="#568d60" stroke-width="7" stroke-linecap="round"/>
+        <g fill="#e18c91"><circle cx="199" cy="335" r="8"/><circle cx="246" cy="333" r="8"/><circle cx="267" cy="351" r="8"/></g>
+        <g fill="#f3cd6b"><circle cx="199" cy="335" r="3" fill="#9a6c48"/><circle cx="246" cy="333" r="3" fill="#9a6c48"/><circle cx="267" cy="351" r="3" fill="#9a6c48"/></g>
+        <path d="M460 328v-30m0 12-13-12m13 17 13-15m31 37v-24m0 10-10-9m10 13 10-12" fill="none" stroke="#538960" stroke-width="6" stroke-linecap="round"/>
+        <g fill="#e6a5b4"><circle cx="460" cy="291" r="7"/><circle cx="447" cy="299" r="7"/><circle cx="473" cy="299" r="7"/><circle cx="460" cy="307" r="7"/></g><circle cx="460" cy="299" r="4" fill="#efce68"/>
+        <path d="M523 116q13-15 26 0m22-19q12-14 24 0" fill="none" stroke="#768d7c" stroke-width="6" stroke-linecap="round"/>
+      </svg>
+    </section>
+
+    <section class="garden-objects" aria-labelledby="gardenObjectsTitle">
+      <h2 id="gardenObjectsTitle">Look around</h2>
+      <div class="garden-object-grid">
+        <button class="garden-object" type="button" data-garden-object="flower" aria-label="Flower. Hear a kind message.">
+          <span class="garden-object-art" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" fill="#f8eee5"/><path d="M60 67v38m0-22-18-12m18 20 19-14" fill="none" stroke="#5e9667" stroke-width="7" stroke-linecap="round"/><path d="M60 28c7-13 23-5 17 7 14-6 21 10 7 16 13 8 4 23-9 16 1 16-16 19-18 4-6 13-23 7-17-7-14 6-21-10-7-16-13-8-4-23 9-16-1-15 16-19 18-4Z" fill="#df91a1"/><circle cx="60" cy="54" r="11" fill="#f1cb69"/></svg></span>
+          <span>Flower</span>
+        </button>
+        <button class="garden-object" type="button" data-garden-object="tree" aria-label="Tree. Hear a kind message.">
+          <span class="garden-object-art" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" fill="#edf2e4"/><path d="M54 67h14v39H54z" fill="#8a6649"/><circle cx="46" cy="48" r="24" fill="#75a977"/><circle cx="71" cy="45" r="27" fill="#83b77e"/><circle cx="61" cy="29" r="23" fill="#91bf85"/><circle cx="37" cy="54" r="13" fill="#6e9e70"/></svg></span>
+          <span>Tree</span>
+        </button>
+        <button class="garden-object" type="button" data-garden-object="bird" aria-label="Bird. Hear a kind message.">
+          <span class="garden-object-art" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" fill="#e8f2f2"/><path d="M26 69c0-19 17-34 38-34 16 0 29 9 34 23l13 8-14 8c-7 15-22 24-39 24-17 0-32-12-32-29Z" fill="#78a9a1"/><path d="M55 63c12-17 30-14 34 0-12-4-22 0-28 12" fill="#badad0"/><circle cx="78" cy="53" r="3.5" fill="#263b35"/><path d="m98 62 15 5-15 5" fill="#e4b767"/><path d="M50 97v10m15-10v10" stroke="#846747" stroke-width="4" stroke-linecap="round"/></svg></span>
+          <span>Bird</span>
+        </button>
+        <button class="garden-object" type="button" data-garden-object="pond" aria-label="Pond. Hear a kind message.">
+          <span class="garden-object-art" aria-hidden="true"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="56" fill="#e8f1f2"/><path d="M17 63c18-21 69-22 88-3 13 13-3 31-24 37-24 7-63 0-70-14-3-7-1-14 6-20Z" fill="#8ec8d2" stroke="#5e9fa9" stroke-width="5"/><path d="M39 70c12-6 27-6 38-1m-25 14c12-4 25-3 34 1" fill="none" stroke="#e1f5f2" stroke-width="5" stroke-linecap="round"/><path d="M25 46v-9m-5 4 5 5 5-5m57 2v-9m-5 4 5 5 5-5" fill="none" stroke="#73a977" stroke-width="4" stroke-linecap="round"/></svg></span>
+          <span>Pond</span>
+        </button>
+      </div>
+      <p id="gardenMessage" class="garden-message" role="status" aria-live="polite">Choose something in the garden.</p>
+    </section>
+
+    <section class="garden-breathing" aria-labelledby="breathingTitle">
+      <div class="breathing-orb" id="breathingOrb" aria-hidden="true"><span></span></div>
+      <div class="breathing-copy"><h2 id="breathingTitle">Breathe gently</h2><p id="breathingGuide" role="status" aria-live="polite">Rest comfortably. Start whenever you feel ready.</p></div>
+      <div class="breathing-buttons">
+        <button id="startBreathing" class="primary-button" type="button">Breathe with me</button>
+        <button id="pauseBreathing" class="secondary-button" type="button" disabled>Pause</button>
+      </div>
+    </section>
+
+    <section class="garden-controls" aria-label="Garden sounds and voice">
+      <div class="sound-controls">
+        <p class="voice-hint">Soft garden sounds</p>
+        <audio id="natureWindAudio" preload="none" loop aria-hidden="true"><source src="assets/garden-wind.ogg" type="audio/ogg; codecs=vorbis"></audio>
+        <audio id="natureBirdsAudio" preload="none" loop aria-hidden="true"><source src="assets/garden-birds.ogg" type="audio/ogg; codecs=vorbis"></audio>
+        <div class="garden-control-buttons">
+          <button id="playNature" class="primary-button" type="button"><span aria-hidden="true">▶</span> Play sounds</button>
+          <button id="stopNature" class="secondary-button" type="button" disabled><span aria-hidden="true">■</span> Stop sounds</button>
+        </div>
+        <div class="nature-volume-control">
+          <label for="natureVolume">Sound volume <output id="natureVolumeValue" for="natureVolume">55%</output></label>
+          <input id="natureVolume" type="range" min="0" max="100" step="5" value="55" aria-label="Sound volume" aria-valuetext="55 percent">
+        </div>
+        <p id="natureStatus" class="garden-control-status" role="status" aria-live="polite"></p>
+      </div>
+      <div class="garden-voice-controls">
+        <p class="voice-hint">A gentle voice is here.</p>
+        <div class="garden-control-buttons">
+          <button id="gardenVoice" class="primary-button" type="button">Hear a gentle guide</button>
+          <button id="gardenRepeatVoice" class="secondary-button" type="button">Repeat Voice</button>
+          <button id="gardenStopVoice" class="secondary-button" type="button">Stop Voice</button>
+        </div>
+        <p id="gardenVoiceStatus" class="sr-only" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <main id="cognitiveGames" class="cognitive-games" tabindex="-1" hidden aria-labelledby="cognitiveTitle">
+    <button id="cognitiveHome" class="back-button" type="button"><span aria-hidden="true">←</span> Home</button>
+    <header class="story-header cognitive-header">
+      <p class="eyebrow">A little picture play</p>
+      <h1 id="cognitiveTitle" tabindex="-1">Cognitive Games</h1>
+      <p>Choose a game and a level. Take your time.</p>
+    </header>
+
+    <section id="cognitiveMenu" class="cognitive-menu" aria-label="Choose a game and level">
+      <p id="cognitiveMenuStatus" class="cognitive-menu-status" role="status" aria-live="polite"></p>
+      <div class="cognitive-grid">
+        <article class="cognitive-card" data-cognitive-card="matching">
+          <div id="cognitiveIcon-matching" class="cognitive-card-picture" aria-hidden="true"></div>
+          <h2>Match Identical Pictures</h2><p>Find two pictures that are the same.</p>
+          <div class="cognitive-level-buttons" aria-label="Match Identical Pictures levels">
+            <button type="button" data-cognitive-game="matching" data-cognitive-level="1">Level 1</button><button type="button" data-cognitive-game="matching" data-cognitive-level="2">Level 2</button><button type="button" data-cognitive-game="matching" data-cognitive-level="3">Level 3</button>
+          </div><p class="cognitive-progress-label" data-progress-for="matching"></p>
+        </article>
+        <article class="cognitive-card" data-cognitive-card="missing">
+          <div id="cognitiveIcon-missing" class="cognitive-card-picture" aria-hidden="true"></div>
+          <h2>Find the Missing Object</h2><p>Look at the pictures. Which one is gone?</p>
+          <div class="cognitive-level-buttons" aria-label="Find the Missing Object levels">
+            <button type="button" data-cognitive-game="missing" data-cognitive-level="1">Level 1</button><button type="button" data-cognitive-game="missing" data-cognitive-level="2">Level 2</button><button type="button" data-cognitive-game="missing" data-cognitive-level="3">Level 3</button>
+          </div><p class="cognitive-progress-label" data-progress-for="missing"></p>
+        </article>
+        <article class="cognitive-card" data-cognitive-card="uses">
+          <div id="cognitiveIcon-uses" class="cognitive-card-picture" aria-hidden="true"></div>
+          <h2>Match Objects to Their Uses</h2><p>What do we use this for?</p>
+          <div class="cognitive-level-buttons" aria-label="Match Objects to Their Uses levels">
+            <button type="button" data-cognitive-game="uses" data-cognitive-level="1">Level 1</button><button type="button" data-cognitive-game="uses" data-cognitive-level="2">Level 2</button><button type="button" data-cognitive-game="uses" data-cognitive-level="3">Level 3</button>
+          </div><p class="cognitive-progress-label" data-progress-for="uses"></p>
+        </article>
+        <article class="cognitive-card" data-cognitive-card="remember">
+          <div id="cognitiveIcon-remember" class="cognitive-card-picture" aria-hidden="true"></div>
+          <h2>Remember and Find the Picture</h2><p>Look carefully, then find the picture.</p>
+          <div class="cognitive-level-buttons" aria-label="Remember and Find the Picture levels">
+            <button type="button" data-cognitive-game="remember" data-cognitive-level="1">Level 1</button><button type="button" data-cognitive-game="remember" data-cognitive-level="2">Level 2</button><button type="button" data-cognitive-game="remember" data-cognitive-level="3">Level 3</button>
+          </div><p class="cognitive-progress-label" data-progress-for="remember"></p>
+        </article>
+        <article class="cognitive-card" data-cognitive-card="identify">
+          <div id="cognitiveIcon-identify" class="cognitive-card-picture" aria-hidden="true"></div>
+          <h2>Identify Familiar Objects</h2><p>Listen to a clue and choose the picture.</p>
+          <div class="cognitive-level-buttons" aria-label="Identify Familiar Objects levels">
+            <button type="button" data-cognitive-game="identify" data-cognitive-level="1">Level 1</button><button type="button" data-cognitive-game="identify" data-cognitive-level="2">Level 2</button><button type="button" data-cognitive-game="identify" data-cognitive-level="3">Level 3</button>
+          </div><p class="cognitive-progress-label" data-progress-for="identify"></p>
+        </article>
+      </div>
+    </section>
+
+    <section id="cognitivePlay" class="cognitive-play" hidden aria-labelledby="cognitivePlayTitle">
+      <div class="cognitive-play-top"><button id="cognitiveMenuButton" class="secondary-button" type="button">Game menu</button><button id="cognitivePlayHome" class="back-button" type="button"><span aria-hidden="true">←</span> Home</button></div>
+      <header class="cognitive-play-header"><p id="cognitiveLevelBadge" class="cognitive-level-badge"></p><h2 id="cognitivePlayTitle" tabindex="-1"></h2><p id="cognitiveRoundStatus" class="cognitive-round-status"></p></header>
+      <p id="cognitivePrompt" class="cognitive-prompt"></p>
+      <div id="cognitiveStage" class="cognitive-stage"></div>
+      <p id="cognitiveFeedback" class="cognitive-feedback" role="status" aria-live="polite">Take your time. There is no rush.</p>
+      <div class="cognitive-progression">
+        <button id="cognitiveNextRound" class="primary-button" type="button" hidden>Next picture</button>
+        <button id="cognitiveNextLevel" class="primary-button" type="button" hidden>Next Level</button>
+      </div>
+      <section class="cognitive-voice" aria-label="Voice controls">
+        <div class="cognitive-voice-buttons">
+          <button id="cognitiveRepeatVoice" class="primary-button" type="button">🔊 Repeat Voice</button>
+          <button id="cognitiveHint" class="hint-button" type="button">💡 Hint</button>
+          <button id="cognitiveStopVoice" class="stop-button" type="button">■ Stop Voice</button>
+        </div>
+        <p id="cognitiveVoiceStatus" class="sr-only" role="status" aria-live="polite"></p>
+      </section>
+    </section>
+  </main>
+
+  <main id="voiceAssistant" class="voice-assistant" tabindex="-1" hidden aria-labelledby="voiceAssistantTitle">
+    <button id="voiceAssistantHome" class="back-button" type="button"><span aria-hidden="true">←</span> Home</button>
+    <header class="story-header voice-assistant-header">
+      <p class="eyebrow">A friendly voice, in your language</p>
+      <h1 id="voiceAssistantTitle">Voice Assistant</h1>
+      <p>Choose the language you feel most comfortable hearing.</p>
+    </header>
+    <section class="voice-language-section" aria-labelledby="voiceLanguageTitle">
+      <h2 id="voiceLanguageTitle">Choose a language</h2>
+      <p id="selectedVoiceLanguage" class="selected-language" role="status" aria-live="polite"></p>
+      <div class="voice-language-grid">
+        <button type="button" class="voice-language-button" data-voice-language="ta-IN" aria-pressed="false"><span class="language-symbol" aria-hidden="true">அ</span><span>Tamil</span><small>தமிழ்</small></button>
+        <button type="button" class="voice-language-button" data-voice-language="en-IN" aria-pressed="false"><span class="language-symbol" aria-hidden="true">A</span><span>English</span><small>India / United States</small></button>
+        <button type="button" class="voice-language-button" data-voice-language="hi-IN" aria-pressed="false"><span class="language-symbol" aria-hidden="true">अ</span><span>Hindi</span><small>हिन्दी</small></button>
+        <button type="button" class="voice-language-button" data-voice-language="ml-IN" aria-pressed="false"><span class="language-symbol" aria-hidden="true">അ</span><span>Malayalam</span><small>മലയാളം</small></button>
+        <button type="button" class="voice-language-button" data-voice-language="te-IN" aria-pressed="false"><span class="language-symbol" aria-hidden="true">అ</span><span>Telugu</span><small>తెలుగు</small></button>
+        <button type="button" class="voice-language-button" data-voice-language="kn-IN" aria-pressed="false"><span class="language-symbol" aria-hidden="true">ಅ</span><span>Kannada</span><small>ಕನ್ನಡ</small></button>
+        <button type="button" class="voice-language-button" data-voice-language="ko-KR" aria-pressed="false"><span class="language-symbol" aria-hidden="true">한</span><span>Korean</span><small>한국어</small></button>
+      </div>
+    </section>
+    <section class="voice-assistant-controls" aria-label="Voice controls">
+      <button type="button" class="primary-button" data-voice-action="speak">🔊 Speak Instructions</button>
+      <button type="button" class="secondary-button" data-voice-action="repeat">Repeat</button>
+      <button type="button" class="hint-button" data-voice-action="hint">💡 Hint</button>
+      <button type="button" class="stop-button" data-voice-action="stop">■ Stop Voice</button>
+      <button type="button" class="primary-button" data-voice-action="listen">🎙️ Voice Input</button>
+    </section>
+    <p id="voiceAssistantStatus" class="voice-assistant-status" role="status" aria-live="polite">Choose a language, then tap a voice button.</p>
+  </main>
+
+  <dialog id="voiceControlDialog" class="voice-control-dialog" aria-labelledby="voiceDialogTitle">
+    <form method="dialog"><button class="close-button" aria-label="Close voice controls" value="close">×</button></form>
+    <div class="dialog-picture" aria-hidden="true">🎙️</div>
+    <h2 id="voiceDialogTitle">Voice Controls</h2>
+    <p id="voiceDialogLanguage" class="voice-dialog-language"></p>
+    <div class="voice-dialog-buttons">
+      <button type="button" class="primary-button" data-voice-action="speak">🔊 Speak Instructions</button>
+      <button type="button" class="secondary-button" data-voice-action="repeat">Repeat</button>
+      <button type="button" class="hint-button" data-voice-action="hint">💡 Hint</button>
+      <button type="button" class="stop-button" data-voice-action="stop">■ Stop Voice</button>
+      <button type="button" class="primary-button" data-voice-action="listen">🎙️ Voice Input</button>
+      <button type="button" class="secondary-button" id="changeVoiceLanguage">Choose Language</button>
+    </div>
+    <p id="voiceDialogStatus" class="voice-dialog-status" role="status" aria-live="polite"></p>
+  </dialog>
+  <p id="globalVoiceStatus" class="sr-only" role="status" aria-live="polite"></p>
+
+  <aside id="reminderNotice" class="reminder-notice" role="status" aria-live="assertive" hidden>
+    <div id="noticePicture" class="notice-picture" aria-hidden="true"></div>
+    <p id="noticeText"></p>
+    <button id="dismissNotice" type="button">Okay</button>
+  </aside>
+
+  <dialog id="featureDialog" aria-labelledby="dialogTitle">
+    <form method="dialog"><button class="close-button" aria-label="Close" value="close">×</button></form>
+    <div class="dialog-picture" id="dialogPicture" aria-hidden="true">🌼</div>
+    <h2 id="dialogTitle">Welcome</h2>
+    <p id="dialogText"></p>
+    <button class="primary-button" id="dialogAction" type="button">Okay</button>
+  </dialog>
+</body>
+</html>
